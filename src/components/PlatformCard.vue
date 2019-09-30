@@ -11,10 +11,12 @@
       <custom-select :cardIndex="cardIndex"></custom-select>
     </template>
     <template slot="card-body">
-      <loading :color="loadingColorBasedOnMode" v-if="loading"></loading>
-      <slot v-else name="card-body">
-        <component :is="this.options.bodyComponentName"></component>
-      </slot>
+      <transition name="fade" mode="out-in">
+        <loading :color="loadingColorBasedOnMode" v-if="loading"></loading>
+        <slot v-else name="card-body">
+          <component :is="this.options.bodyComponentName"></component>
+        </slot>
+      </transition>
     </template>
   </card>
 </template>
@@ -98,3 +100,15 @@ export default {
   },
 };
 </script>
+
+<style>
+.fade-enter-active {
+  transition: opacity 0.25s;
+}
+.fade-leave-active {
+  transition: opacity 0.05s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+</style>
